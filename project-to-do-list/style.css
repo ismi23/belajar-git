@@ -158,3 +158,22 @@ footer {
     min-height: 44px;
   }
 }
+
+.task-filter {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.task-filter button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.task-filter button:hover {
+  background: #e8f0fe;
+}
