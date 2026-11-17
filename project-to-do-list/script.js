@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskInput = document.getElementById("task-input");
     const taskDeadline = document.getElementById("task-deadline");
     const taskPriority = document.getElementById("task-priority");
+    const taskCategory = document.getElementById("task-category");
     const taskList = document.getElementById("task-list");
     const taskCount = document.getElementById("task-count");
     const searchInput = document.getElementById("search-input");
@@ -11,11 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterActive = document.getElementById("filter-active");
     const filterCompleted = document.getElementById("filter-completed");
 
-    // Mengambil data dari Local Storage
     let tasks = JSON.parse(localStorage.getItem("todoTasks")) || [];
     let currentFilter = "all";
 
-    // Menyimpan data ke Local Storage
+    // Menyimpan tugas
     function saveTasks() {
         localStorage.setItem("todoTasks", JSON.stringify(tasks));
     }
@@ -26,18 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let filteredTasks = tasks;
 
-        // Filter berdasarkan status
         if (currentFilter === "active") {
             filteredTasks = filteredTasks.filter(task => !task.completed);
         } else if (currentFilter === "completed") {
             filteredTasks = filteredTasks.filter(task => task.completed);
         }
 
-        // Filter berdasarkan pencarian
         const keyword = searchInput.value.toLowerCase().trim();
 
         filteredTasks = filteredTasks.filter(task =>
-            task.text.toLowerCase().includes(keyword)
+            task.text.toLowerCase().includes(keyword) ||
+            (task.category || "Lainnya").toLowerCase().includes(keyword)
         );
 
         taskCount.textContent = `${tasks.length} tugas`;
@@ -90,11 +89,22 @@ document.addEventListener("DOMContentLoaded", () => {
             priority.className = "priority-text";
             priority.textContent = `Prioritas: ${task.priority}`;
 
-            taskInfo.append(checkbox, taskText, deadline, priority);
+            // Kategori
+            const category = document.createElement("span");
+            category.className = "category-text";
+            category.textContent = `Kategori: ${task.category || "Lainnya"}`;
+
+            taskInfo.append(
+                checkbox,
+                taskText,
+                deadline,
+                priority,
+                category
+            );
 
             const buttonContainer = document.createElement("div");
 
-            // Tombol Edit
+            // Edit
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
             editButton.className = "edit-button";
@@ -109,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // Tombol Hapus
+            // Hapus
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Hapus";
             deleteButton.className = "delete-button";
@@ -128,8 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Menambahkan tugas
-    taskForm.addEventListener("submit", (event) => {
+    // Tambah tugas
+    taskForm.addEventListener("submit", event => {
         event.preventDefault();
 
         const text = taskInput.value.trim();
@@ -144,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
             text: text,
             deadline: taskDeadline.value,
             priority: taskPriority.value,
+            category: taskCategory.value,
             completed: false
         };
 
@@ -154,28 +165,28 @@ document.addEventListener("DOMContentLoaded", () => {
         taskForm.reset();
     });
 
-    // Filter semua tugas
+    // Filter semua
     filterAll.addEventListener("click", () => {
         currentFilter = "all";
         setActiveFilter(filterAll);
         renderTasks();
     });
 
-    // Filter tugas aktif
+    // Filter belum selesai
     filterActive.addEventListener("click", () => {
         currentFilter = "active";
         setActiveFilter(filterActive);
         renderTasks();
     });
 
-    // Filter tugas selesai
+    // Filter selesai
     filterCompleted.addEventListener("click", () => {
         currentFilter = "completed";
         setActiveFilter(filterCompleted);
         renderTasks();
     });
 
-    // Mengatur tombol filter aktif
+    // Tombol filter aktif
     function setActiveFilter(activeButton) {
         [filterAll, filterActive, filterCompleted].forEach(button => {
             button.classList.remove("active");
@@ -185,10 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Pencarian tugas
-    searchInput.addEventListener("input", () => {
-        renderTasks();
-    });
+    searchInput.addEventListener("input", renderTasks);
 
-    // Menampilkan tugas saat halaman dibuka
+    // Tampilkan tugas saat halaman dibuka
     renderTasks();
 });
