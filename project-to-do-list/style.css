@@ -1,0 +1,160 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 48px 20px;
+  font-family: Arial, sans-serif;
+  color: #243047;
+  background: #f3f6fb;
+}
+
+.container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 36px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(31, 48, 75, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #4776c7;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.subtitle {
+  margin: 10px 0 28px;
+  color: #718096;
+}
+
+.task-form {
+  display: flex;
+  gap: 10px;
+}
+
+.task-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid #dce3ee;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+button {
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  color: #ffffff;
+  background: #4776c7;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #345fa8;
+}
+
+.task-section {
+  margin-top: 32px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+#task-count {
+  color: #718096;
+  font-size: 13px;
+}
+
+.task-list {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #e7ecf3;
+  border-radius: 10px;
+}
+
+.task-item span {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.task-item.completed span {
+  color: #929cad;
+  text-decoration: line-through;
+}
+
+.task-item input {
+  width: 17px;
+  height: 17px;
+  accent-color: #4776c7;
+}
+
+.delete-button {
+  padding: 8px 11px;
+  background: #fff0f0;
+  color: #c54848;
+}
+
+.delete-button:hover {
+  background: #ffe0e0;
+}
+
+.empty-state {
+  padding: 22px;
+  border: 1px dashed #dce3ee;
+  border-radius: 10px;
+  color: #8792a3;
+  text-align: center;
+}
+
+footer {
+  margin-top: 32px;
+  color: #9aa4b2;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .container {
+    padding: 24px 18px;
+  }
+
+  .task-form {
+    flex-direction: column;
+  }
+
+  .task-form button {
+    min-height: 44px;
+  }
+}
