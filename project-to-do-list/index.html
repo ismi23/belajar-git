@@ -3,34 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List | Belajar Git</title>
+    <title>To-Do List</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="container">
-
-        <header>
-            <p class="eyebrow">PROJECT LATIHAN GIT</p>
-            <h1>Daftar Tugas</h1>
-            <p class="subtitle">Catat kegiatanmu dan selesaikan satu per satu.</p>
+    <div class="container">
+        <header class="header">
+            <h1>To-Do List</h1>
+            <p>Atur tugasmu dan selesaikan tepat waktu.</p>
         </header>
 
         <!-- Form Tambah Tugas -->
         <form id="task-form" class="task-form">
-
             <input
-                id="task-input"
                 type="text"
-                placeholder="Tulis tugas baru..."
-                autocomplete="off"
+                id="task-input"
+                placeholder="Masukkan nama tugas..."
                 required
             >
 
             <input
-                id="task-deadline"
                 type="date"
-                required
+                id="task-deadline"
             >
 
             <select id="task-priority">
@@ -39,49 +34,49 @@
                 <option value="Tinggi">Prioritas Tinggi</option>
             </select>
 
-            <button type="submit">+ Tambah Tugas</button>
-
+            <button type="submit" class="add-button">
+                + Tambah Tugas
+            </button>
         </form>
 
+        <!-- Pencarian Tugas -->
+        <div class="search-container">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Cari tugas..."
+            >
+        </div>
+
+        <!-- Filter Tugas -->
+        <div class="task-filter">
+            <button type="button" id="filter-all" class="active">
+                Semua
+            </button>
+
+            <button type="button" id="filter-active">
+                Belum Selesai
+            </button>
+
+            <button type="button" id="filter-completed">
+                Selesai
+            </button>
+        </div>
+
+        <!-- Informasi Jumlah Tugas -->
+        <div class="task-header">
+            <h2>Daftar Tugas</h2>
+            <span id="task-count">0 tugas</span>
+        </div>
+
         <!-- Daftar Tugas -->
-        <section class="task-section">
+        <ul id="task-list" class="task-list">
+        </ul>
 
-            <div class="section-heading">
-                <h2>Tugas Saya</h2>
-                <p>Kelola dan pantau semua kegiatanmu.</p>
-                <span id="task-count">0 tugas</span>
-            </div>
-
-            <!-- Filter Tugas -->
-            <div class="task-filter" id="task-filter">
-                <button type="button" id="filter-all" class="active">
-                    Semua
-                </button>
-
-                <button type="button" id="filter-active">
-                    Belum Selesai
-                </button>
-
-                <button type="button" id="filter-completed">
-                    Selesai
-                </button>
-            </div>
-
-            <!-- Daftar -->
-            <ul id="task-list" class="task-list">
-                <li class="empty-state">
-                    Belum ada tugas. Tambahkan tugas pertamamu!
-                </li>
-            </ul>
-
-        </section>
-
-        <footer>
-            Project sederhana untuk latihan HTML, CSS, JavaScript, dan Git.
-            <p>Saya sedang belajar Git Push dan Pull.</p>
+        <footer class="footer">
+            <p>To-Do List &copy; 2026</p>
         </footer>
-
-    </main>
+    </div>
 
     <script src="script.js"></script>
 

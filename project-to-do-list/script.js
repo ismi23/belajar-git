@@ -5,16 +5,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskPriority = document.getElementById("task-priority");
     const taskList = document.getElementById("task-list");
     const taskCount = document.getElementById("task-count");
+    const searchInput = document.getElementById("search-input");
 
     const filterAll = document.getElementById("filter-all");
     const filterActive = document.getElementById("filter-active");
     const filterCompleted = document.getElementById("filter-completed");
 
-    // Mengambil data tugas dari Local Storage
+    // Mengambil data dari Local Storage
     let tasks = JSON.parse(localStorage.getItem("todoTasks")) || [];
     let currentFilter = "all";
 
-    // Menyimpan data tugas ke Local Storage
+    // Menyimpan data ke Local Storage
     function saveTasks() {
         localStorage.setItem("todoTasks", JSON.stringify(tasks));
     }
@@ -25,18 +26,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let filteredTasks = tasks;
 
+        // Filter berdasarkan status
         if (currentFilter === "active") {
-            filteredTasks = tasks.filter(task => !task.completed);
+            filteredTasks = filteredTasks.filter(task => !task.completed);
         } else if (currentFilter === "completed") {
-            filteredTasks = tasks.filter(task => task.completed);
+            filteredTasks = filteredTasks.filter(task => task.completed);
         }
+
+        // Filter berdasarkan pencarian
+        const keyword = searchInput.value.toLowerCase().trim();
+
+        filteredTasks = filteredTasks.filter(task =>
+            task.text.toLowerCase().includes(keyword)
+        );
 
         taskCount.textContent = `${tasks.length} tugas`;
 
         if (filteredTasks.length === 0) {
             taskList.innerHTML = `
                 <li class="empty-message">
-                    Belum ada tugas.
+                    Tugas tidak ditemukan.
                 </li>
             `;
             return;
@@ -53,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const taskInfo = document.createElement("div");
             taskInfo.className = "task-info";
 
+            // Checkbox
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.checked = task.completed;
@@ -63,16 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderTasks();
             });
 
+            // Nama tugas
             const taskText = document.createElement("span");
             taskText.className = "task-text";
             taskText.textContent = task.text;
 
+            // Deadline
             const deadline = document.createElement("span");
             deadline.className = "deadline-text";
             deadline.textContent = task.deadline
                 ? `Deadline: ${task.deadline}`
                 : "Tanpa deadline";
 
+            // Prioritas
             const priority = document.createElement("span");
             priority.className = "priority-text";
             priority.textContent = `Prioritas: ${task.priority}`;
@@ -81,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const buttonContainer = document.createElement("div");
 
+            // Tombol Edit
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
             editButton.className = "edit-button";
@@ -95,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
+            // Tombol Hapus
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Hapus";
             deleteButton.className = "delete-button";
@@ -113,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Menambahkan tugas baru
+    // Menambahkan tugas
     taskForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
@@ -136,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         saveTasks();
         renderTasks();
-
         taskForm.reset();
     });
 
@@ -169,6 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         activeButton.classList.add("active");
     }
+
+    // Pencarian tugas
+    searchInput.addEventListener("input", () => {
+        renderTasks();
+    });
 
     // Menampilkan tugas saat halaman dibuka
     renderTasks();
