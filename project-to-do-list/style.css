@@ -1,3 +1,7 @@
+/* =========================
+   GLOBAL
+========================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,137 +9,137 @@
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background: #F7F5EF;
-    color: #343A35;
+    color: #344536;
     min-height: 100vh;
-    padding: 50px 20px;
+    padding: 30px 15px;
 }
 
 .container {
-    max-width: 650px;
-    margin: auto;
+    max-width: 850px;
+    margin: 0 auto;
     background: #FFFEFA;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 10px 35px rgba(52, 58, 53, 0.08);
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(70, 90, 70, 0.08);
 }
 
-header {
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    text-align: center;
     margin-bottom: 30px;
 }
 
-.eyebrow {
-    color: #78977A;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-}
-
-h1 {
+.header h1 {
     font-size: 32px;
+    color: #58765B;
     margin-bottom: 8px;
-    color: #343A35;
 }
 
-.subtitle {
-    color: #858B82;
+.header p {
+    color: #849184;
     font-size: 14px;
 }
+
+/* =========================
+   FORM TAMBAH TUGAS
+========================= */
 
 .task-form {
     display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
-.task-form input {
-    flex: 1;
-    min-width: 0;
-    padding: 14px 16px;
-    border: 1px solid #E3E6DC;
+.task-form input,
+.task-form select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #D5DDD3;
     border-radius: 10px;
-    outline: none;
-    font-size: 14px;
     background: #FFFEFA;
+    color: #344536;
+    font-size: 14px;
+    outline: none;
     transition: 0.2s;
 }
 
-.task-form input:focus {
+.task-form input:focus,
+.task-form select:focus {
     border-color: #78977A;
-    box-shadow: 0 0 0 3px rgba(120, 151, 122, 0.12);
+    box-shadow: 0 0 0 3px rgba(120, 151, 122, 0.15);
 }
 
-.task-form button {
-    padding: 14px 22px;
+.add-button {
+    padding: 13px;
     border: none;
     border-radius: 10px;
     background: #78977A;
     color: white;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.task-form button:hover {
+.add-button:hover {
     background: #58765B;
-    transform: translateY(-1px);
 }
 
-.task-section {
-    border-top: 1px solid #F0EFE8;
-    padding-top: 25px;
+/* =========================
+   PENCARIAN TUGAS
+========================= */
+
+.search-container {
+    margin: 20px 0;
 }
 
-.section-heading {
-    margin-bottom: 20px;
+.search-container input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #D5DDD3;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    background: #FFFEFA;
+    color: #344536;
+    transition: 0.2s;
 }
 
-.section-heading h2 {
-    font-size: 20px;
-    margin-bottom: 8px;
-    color: #343A35;
+.search-container input:focus {
+    border-color: #78977A;
+    box-shadow: 0 0 0 3px rgba(120, 151, 122, 0.15);
 }
 
-.section-heading p {
-    color: #858B82;
-    font-size: 13px;
-    margin-bottom: 5px;
-}
-
-#task-count {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 6px 12px;
-    background: #E8EFE5;
-    color: #58765B;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-}
+/* =========================
+   FILTER TUGAS
+========================= */
 
 .task-filter {
     display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
+    gap: 10px;
     flex-wrap: wrap;
+    margin-bottom: 25px;
 }
 
 .task-filter button {
-    padding: 9px 15px;
-    border: 1px solid #E3E6DC;
+    padding: 9px 16px;
+    border: 1px solid #D5DDD3;
     border-radius: 8px;
-    background: #FFFEFA;
-    color: #858B82;
+    background: #F7F5EF;
+    color: #58765B;
     font-size: 13px;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .task-filter button:hover {
-    background: #E8EFE5;
-    color: #58765B;
+    background: #E5EDE3;
 }
 
 .task-filter button.active {
@@ -144,119 +148,220 @@ h1 {
     border-color: #78977A;
 }
 
+/* =========================
+   DAFTAR TUGAS
+========================= */
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.task-header h2 {
+    font-size: 20px;
+    color: #58765B;
+}
+
+#task-count {
+    font-size: 13px;
+    color: #849184;
+    background: #E5EDE3;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
 .task-list {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .task-item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    padding: 15px;
-    margin-bottom: 10px;
-    background: #F8F7F1;
-    border: 1px solid #F0EFE8;
-    border-radius: 10px;
+    gap: 15px;
+    padding: 16px;
+    border: 1px solid #E5E9E1;
+    border-radius: 12px;
+    background: #FFFEFA;
     transition: 0.2s;
 }
 
 .task-item:hover {
-    border-color: #C8D7C5;
-    background: #F4F6EF;
+    border-color: #B8CBB7;
+    box-shadow: 0 4px 12px rgba(70, 90, 70, 0.06);
 }
 
-.task-item input {
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+    min-width: 0;
+}
+
+.task-info input[type="checkbox"] {
     width: 17px;
     height: 17px;
     accent-color: #78977A;
     cursor: pointer;
 }
 
-.task-item span {
-    flex: 1;
-    font-size: 14px;
+.task-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #344536;
     overflow-wrap: anywhere;
 }
 
-.task-item.completed span {
+.task-item.completed .task-text {
     text-decoration: line-through;
-    color: #A5AA9F;
+    color: #A0AAA0;
+}
+
+/* =========================
+   DEADLINE
+========================= */
+
+.deadline-text {
+    color: #849184;
+    font-size: 12px;
+}
+
+/* =========================
+   PRIORITAS
+========================= */
+
+.priority-text {
+    display: inline-block;
+    width: fit-content;
+    background: #F3DFD8;
+    color: #A45F4D;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* =========================
+   KATEGORI
+========================= */
+
+.category-text {
+    display: inline-block;
+    width: fit-content;
+    background: #E5EDE3;
+    color: #58765B;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* =========================
+   TOMBOL EDIT DAN HAPUS
+========================= */
+
+.task-item > div:last-child {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.edit-button,
+.delete-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .edit-button {
-    padding: 7px 12px;
-    background: #E8EFE5;
+    background: #E5EDE3;
     color: #58765B;
-    border: none;
-    border-radius: 7px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.2s;
 }
 
 .edit-button:hover {
-    background: #D5E3D1;
+    background: #D1E0CF;
 }
 
 .delete-button {
-    padding: 7px 12px;
     background: #F3DFD8;
-    color: #B76551;
-    border: none;
-    border-radius: 7px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.2s;
+    color: #A45F4D;
 }
 
 .delete-button:hover {
     background: #EBCBC0;
 }
 
-.empty-state {
-    padding: 30px 15px;
+/* =========================
+   PESAN KOSONG
+========================= */
+
+.empty-message {
     text-align: center;
-    color: #A5AA9F;
-    background: #F8F7F1;
-    border: 1px dashed #D8DCCF;
-    border-radius: 10px;
+    padding: 30px 15px;
+    color: #A0AAA0;
     font-size: 14px;
+    background: #F7F5EF;
+    border-radius: 12px;
 }
 
-footer {
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    text-align: center;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid #F0EFE8;
-    text-align: center;
-    color: #A5AA9F;
+    border-top: 1px solid #E5E9E1;
+    color: #A0AAA0;
     font-size: 12px;
-    line-height: 1.8;
 }
 
-@media (max-width: 480px) {
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
+
+@media (max-width: 600px) {
     body {
-        padding: 20px 12px;
+        padding: 15px 10px;
     }
 
     .container {
-        padding: 22px 18px;
+        padding: 20px 15px;
     }
 
-    h1 {
-        font-size: 27px;
-    }
-
-    .task-form button {
-        padding: 12px 15px;
+    .header h1 {
+        font-size: 26px;
     }
 
     .task-item {
-        gap: 7px;
-        padding: 12px 8px;
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .edit-button,
-    .delete-button {
-        padding: 7px 9px;
+    .task-item > div:last-child {
+        justify-content: flex-end;
+    }
+
+    .task-filter {
+        gap: 7px;
+    }
+
+    .task-filter button {
+        flex: 1;
+        padding: 9px 8px;
+        font-size: 12px;
+    }
+
+    .task-header h2 {
+        font-size: 18px;
     }
 }

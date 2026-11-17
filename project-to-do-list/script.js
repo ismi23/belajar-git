@@ -1,179 +1,203 @@
-document.addEventListener("DOMContentLoaded", function () {
-
+document.addEventListener("DOMContentLoaded", () => {
     const taskForm = document.getElementById("task-form");
     const taskInput = document.getElementById("task-input");
     const taskDeadline = document.getElementById("task-deadline");
     const taskPriority = document.getElementById("task-priority");
+    const taskCategory = document.getElementById("task-category");
     const taskList = document.getElementById("task-list");
     const taskCount = document.getElementById("task-count");
+    const searchInput = document.getElementById("search-input");
 
     const filterAll = document.getElementById("filter-all");
     const filterActive = document.getElementById("filter-active");
     const filterCompleted = document.getElementById("filter-completed");
 
-    let tasks = [];
+    let tasks = JSON.parse(localStorage.getItem("todoTasks")) || [];
     let currentFilter = "all";
 
+    // Menyimpan tugas
+    function saveTasks() {
+        localStorage.setItem("todoTasks", JSON.stringify(tasks));
+    }
+
+    // Menampilkan tugas
     function renderTasks() {
         taskList.innerHTML = "";
 
-        taskCount.textContent = `${tasks.length} tugas`;
+        let filteredTasks = tasks;
 
-        const filteredTasks = tasks.filter(function (task) {
-            if (currentFilter === "active") {
-                return !task.completed;
-            }
-
-            if (currentFilter === "completed") {
-                return task.completed;
-            }
-
-            return true;
-        });
-
-        if (filteredTasks.length === 0) {
-            const emptyMessage = document.createElement("li");
-            emptyMessage.className = "empty-state";
-
-            emptyMessage.textContent = tasks.length === 0
-                ? "Belum ada tugas. Tambahkan tugas pertamamu!"
-                : "Tidak ada tugas pada kategori ini.";
-
-            taskList.appendChild(emptyMessage);
+        if (currentFilter === "active") {
+            filteredTasks = filteredTasks.filter(task => !task.completed);
+        } else if (currentFilter === "completed") {
+            filteredTasks = filteredTasks.filter(task => task.completed);
         }
 
-        filteredTasks.forEach(function (task) {
+        const keyword = searchInput.value.toLowerCase().trim();
 
-            const item = document.createElement("li");
+        filteredTasks = filteredTasks.filter(task =>
+            task.text.toLowerCase().includes(keyword) ||
+            (task.category || "Lainnya").toLowerCase().includes(keyword)
+        );
 
-            item.className = task.completed
-                ? "task-item completed"
-                : "task-item";
+        taskCount.textContent = `${tasks.length} tugas`;
+
+        if (filteredTasks.length === 0) {
+            taskList.innerHTML = `
+                <li class="empty-message">
+                    Tugas tidak ditemukan.
+                </li>
+            `;
+            return;
+        }
+
+        filteredTasks.forEach(task => {
+            const li = document.createElement("li");
+            li.className = "task-item";
+
+            if (task.completed) {
+                li.classList.add("completed");
+            }
+
+            const taskInfo = document.createElement("div");
+            taskInfo.className = "task-info";
 
             // Checkbox
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.checked = task.completed;
 
-            checkbox.addEventListener("change", function () {
+            checkbox.addEventListener("change", () => {
                 task.completed = checkbox.checked;
+                saveTasks();
                 renderTasks();
             });
 
             // Nama tugas
-            const text = document.createElement("span");
-            text.textContent = task.text;
+            const taskText = document.createElement("span");
+            taskText.className = "task-text";
+            taskText.textContent = task.text;
 
-            // Informasi deadline
-            const deadlineText = document.createElement("small");
-            deadlineText.className = "deadline-text";
-            deadlineText.textContent = "Deadline: " + task.deadline;
+            // Deadline
+            const deadline = document.createElement("span");
+            deadline.className = "deadline-text";
+            deadline.textContent = task.deadline
+                ? `Deadline: ${task.deadline}`
+                : "Tanpa deadline";
 
             // Prioritas
-            const priorityText = document.createElement("small");
-            priorityText.className =
-                "priority-text " + task.priority.toLowerCase();
+            const priority = document.createElement("span");
+            priority.className = "priority-text";
+            priority.textContent = `Prioritas: ${task.priority}`;
 
-            priorityText.textContent = task.priority;
+            // Kategori
+            const category = document.createElement("span");
+            category.className = "category-text";
+            category.textContent = `Kategori: ${task.category || "Lainnya"}`;
 
-            // Tombol Edit
+            taskInfo.append(
+                checkbox,
+                taskText,
+                deadline,
+                priority,
+                category
+            );
+
+            const buttonContainer = document.createElement("div");
+
+            // Edit
             const editButton = document.createElement("button");
-            editButton.type = "button";
-            editButton.className = "edit-button";
             editButton.textContent = "Edit";
+            editButton.className = "edit-button";
 
-            editButton.addEventListener("click", function () {
-                const newText = prompt("Ubah nama tugas:", task.text);
+            editButton.addEventListener("click", () => {
+                const newText = prompt("Edit tugas:", task.text);
 
-                if (newText === null) return;
-
-                if (newText.trim() === "") {
-                    alert("Nama tugas tidak boleh kosong!");
-                    return;
-                }
-
-                task.text = newText.trim();
-                renderTasks();
-            });
-
-            // Tombol Hapus
-            const deleteButton = document.createElement("button");
-            deleteButton.type = "button";
-            deleteButton.className = "delete-button";
-            deleteButton.textContent = "Hapus";
-
-            deleteButton.addEventListener("click", function () {
-                const confirmation = confirm(
-                    "Apakah kamu yakin ingin menghapus tugas ini?"
-                );
-
-                if (confirmation) {
-                    tasks = tasks.filter(function (currentTask) {
-                        return currentTask.id !== task.id;
-                    });
-
+                if (newText !== null && newText.trim() !== "") {
+                    task.text = newText.trim();
+                    saveTasks();
                     renderTasks();
                 }
             });
 
-            item.appendChild(checkbox);
-            item.appendChild(text);
-            item.appendChild(deadlineText);
-            item.appendChild(priorityText);
-            item.appendChild(editButton);
-            item.appendChild(deleteButton);
+            // Hapus
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Hapus";
+            deleteButton.className = "delete-button";
 
-            taskList.appendChild(item);
+            deleteButton.addEventListener("click", () => {
+                if (confirm("Yakin ingin menghapus tugas ini?")) {
+                    tasks = tasks.filter(item => item.id !== task.id);
+                    saveTasks();
+                    renderTasks();
+                }
+            });
+
+            buttonContainer.append(editButton, deleteButton);
+            li.append(taskInfo, buttonContainer);
+            taskList.appendChild(li);
         });
-
-        filterAll.classList.toggle("active", currentFilter === "all");
-        filterActive.classList.toggle("active", currentFilter === "active");
-        filterCompleted.classList.toggle("active", currentFilter === "completed");
     }
 
     // Tambah tugas
-    taskForm.addEventListener("submit", function (event) {
+    taskForm.addEventListener("submit", event => {
         event.preventDefault();
 
         const text = taskInput.value.trim();
 
-        if (text === "") return;
+        if (text === "") {
+            alert("Nama tugas tidak boleh kosong!");
+            return;
+        }
 
-        tasks.push({
+        const newTask = {
             id: Date.now(),
             text: text,
             deadline: taskDeadline.value,
             priority: taskPriority.value,
+            category: taskCategory.value,
             completed: false
-        });
+        };
 
-        taskInput.value = "";
-        taskDeadline.value = "";
-        taskPriority.value = "Sedang";
+        tasks.push(newTask);
 
-        taskInput.focus();
-
+        saveTasks();
         renderTasks();
+        taskForm.reset();
     });
 
     // Filter semua
-    filterAll.addEventListener("click", function () {
+    filterAll.addEventListener("click", () => {
         currentFilter = "all";
+        setActiveFilter(filterAll);
         renderTasks();
     });
 
     // Filter belum selesai
-    filterActive.addEventListener("click", function () {
+    filterActive.addEventListener("click", () => {
         currentFilter = "active";
+        setActiveFilter(filterActive);
         renderTasks();
     });
 
     // Filter selesai
-    filterCompleted.addEventListener("click", function () {
+    filterCompleted.addEventListener("click", () => {
         currentFilter = "completed";
+        setActiveFilter(filterCompleted);
         renderTasks();
     });
 
-    renderTasks();
+    // Tombol filter aktif
+    function setActiveFilter(activeButton) {
+        [filterAll, filterActive, filterCompleted].forEach(button => {
+            button.classList.remove("active");
+        });
 
+        activeButton.classList.add("active");
+    }
+
+    // Pencarian tugas
+    searchInput.addEventListener("input", renderTasks);
+
+    // Tampilkan tugas saat halaman dibuka
+    renderTasks();
 });
