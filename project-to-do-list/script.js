@@ -3,7 +3,7 @@ const taskInput = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 const taskCount = document.getElementById("task-count");
 
-let tasks = [];
+let tasks = []; 
 
 function renderTasks() {
   taskList.innerHTML = "";
