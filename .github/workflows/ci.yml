@@ -1,0 +1,22 @@
+name: Cek Project To-Do List
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mengambil kode repository
+        uses: actions/checkout@v4
+
+      - name: Memeriksa file project
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          echo "Semua file project tersedia!"
