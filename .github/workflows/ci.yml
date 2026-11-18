@@ -16,7 +16,7 @@ jobs:
 
       - name: Memeriksa file project
         run: |
-          test -f index.html
-          test -f style.css
-          test -f script.js
+          test -f project-to-do-list/index.html
+          test -f project-to-do-list/style.css
+          test -f project-to-do-list/script.js
           echo "Semua file project tersedia!"
