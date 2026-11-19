@@ -45,12 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let updated = false;
 
         tasks.forEach(task => {
-            if (task.repeatDaily) {
-                if (task.lastResetDate !== today) {
-                    task.completed = false;
-                    task.lastResetDate = today;
-                    updated = true;
-                }
+            if (task.repeatDaily && task.lastResetDate !== today) {
+                task.completed = false;
+                task.lastResetDate = today;
+                updated = true;
             }
         });
 
@@ -89,10 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
             formatDate(task.deadline).toLowerCase().includes(keyword)
         );
 
-        // Menghitung jumlah seluruh tugas
         taskCount.textContent = `${tasks.length} tugas`;
 
-        // Pesan jika tugas tidak ditemukan
         if (filteredTasks.length === 0) {
             taskList.innerHTML = `
                 <li class="empty-message">
@@ -152,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const repeatLabel = document.createElement("span");
                 repeatLabel.className = "repeat-text";
                 repeatLabel.textContent = "Ulangi setiap hari";
-                taskInfo.append(repeatLabel);
+                taskInfo.appendChild(repeatLabel);
             }
 
             taskInfo.append(
@@ -229,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTasks();
         taskForm.reset();
 
-        // Mengisi kembali tanggal hari ini
         setTodayDeadline();
     });
 
