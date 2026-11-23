@@ -16,6 +16,7 @@
 
         <!-- Form Tambah Tugas -->
         <form id="task-form" class="task-form">
+
             <input
                 type="text"
                 id="task-input"
@@ -23,20 +24,40 @@
                 required
             >
 
+            <!-- Deadline -->
             <input
                 type="date"
                 id="task-deadline"
             >
 
+            <!-- Prioritas -->
             <select id="task-priority">
                 <option value="Rendah">Prioritas Rendah</option>
                 <option value="Sedang" selected>Prioritas Sedang</option>
                 <option value="Tinggi">Prioritas Tinggi</option>
             </select>
 
+            <!-- Kategori -->
+            <select id="task-category">
+                <option value="Kuliah">Kuliah</option>
+                <option value="Kerja">Kerja</option>
+                <option value="Pribadi">Pribadi</option>
+                <option value="Lainnya" selected>Lainnya</option>
+            </select>
+
+            <!-- Pengulangan Tugas Harian -->
+            <label class="repeat-option">
+                <input
+                    type="checkbox"
+                    id="task-repeat"
+                >
+                <span>Ulangi setiap hari</span>
+            </label>
+
             <button type="submit" class="add-button">
                 + Tambah Tugas
             </button>
+
         </form>
 
         <!-- Pencarian Tugas -->
@@ -44,12 +65,13 @@
             <input
                 type="text"
                 id="search-input"
-                placeholder="Cari tugas..."
+                placeholder="Cari nama, kategori, prioritas, atau deadline..."
             >
         </div>
 
         <!-- Filter Tugas -->
         <div class="task-filter">
+
             <button type="button" id="filter-all" class="active">
                 Semua
             </button>
@@ -61,6 +83,7 @@
             <button type="button" id="filter-completed">
                 Selesai
             </button>
+
         </div>
 
         <!-- Informasi Jumlah Tugas -->
@@ -73,10 +96,12 @@
         <ul id="task-list" class="task-list">
         </ul>
 
+        <!-- Footer -->
         <footer class="footer">
             <p>To-Do List &copy; 2026</p>
             <p>Saya sedang belajar Git Workflow.</p>
         </footer>
+
     </div>
 
     <script src="script.js"></script>
