@@ -63,3 +63,20 @@ belajar-git/
 4. Buat branch untuk latihan fitur edit.
 5. Latihan menggabungkan branch menggunakan merge.
 6. Coba lakukan perubahan pada baris yang sama untuk mempelajari merge conflict.
+
+## Pengujian Aplikasi (Testing)
+
+Pengujian dilakukan untuk memastikan fitur aplikasi To-Do List berjalan sesuai fungsinya.
+
+Fitur yang menjadi objek pengujian:
+- Tambah tugas.
+- Edit tugas.
+- Hapus tugas.
+- Tandai tugas selesai.
+- Deadline tugas.
+- Prioritas dan kategori.
+- Pengulangan tugas harian.
+- Pencarian dan filter tugas.
+- Penyimpanan data menggunakan Local Storage.
+
+Pengujian dilakukan secara manual melalui browser.
