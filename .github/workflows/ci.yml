@@ -1,22 +1,21 @@
-name: Cek Project To-Do List
+name: CI - Pemeriksaan Kode
 
 on:
   push:
-    branches: [main]
+    branches:
+      - development
   pull_request:
-    branches: [main]
+    branches:
+      - development
 
 jobs:
-  check:
+  check-code:
+    name: Pemeriksaan JavaScript
     runs-on: ubuntu-latest
 
     steps:
       - name: Mengambil kode repository
         uses: actions/checkout@v4
 
-      - name: Memeriksa file project
-        run: |
-          test -f project-to-do-list/index.html
-          test -f project-to-do-list/style.css
-          test -f project-to-do-list/script.js
-          echo "Semua file project tersedia!"
+      - name: Memeriksa sintaks JavaScript
+        run: node --check project-to-do-list/script.js
